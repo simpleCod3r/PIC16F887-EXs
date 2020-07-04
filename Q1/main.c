@@ -20,11 +20,13 @@
 
 #define _XTAL_FREQ 4000000
 
-int adc = 0;
+uint16_t adc = 0x0000;
 uint16_t timer1_value = 15535;
-uint8_t flag = 0;
-void interrupt ISR(void)
+uint8_t flag = 0x00;
+
+void interrupt ISR(void) // Interrupt Service Routine
 	{
+		//Interrupção periódica com tempo calibrado para 100ms
 		if(PIR1bits.TMR1IF == 1)
 			{
 				PIR1bits.TMR1IF = 0;
@@ -37,11 +39,10 @@ void interrupt ISR(void)
 int main(void)
 {
 	//setup
-	TRISC = 0;
-	TRISD = 0;
-	TRISA = 0b00000001;
-	ANSEL = 0x00000001;
-	ANSELH = 0X00;
+	TRISC = 0x00;		//PORTC como saídas para validação
+	TRISD = 0x00;		//PORTD como saídas para validação
+	TRISA = 0b00000001; //PORTAbits.RA0 definido como entrada
+	ANSEL = 0b00000001;	//Entrada em PORTAbits.RA0 tipo analógica
 	
 	//TMR1 = 55536 -> 0xD8F0
 	TMR1H = (uint8_t) (timer1_value >> 8);
