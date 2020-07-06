@@ -2,7 +2,7 @@
       |----------------UNIVERSIDADE FEDERAL DE ITAJUBÁ----------------|
       |--------------------------Regime - RTE-------------------------|
       |---------------Lista disciplina microcontroladores ------------|
-      |--------------------------Atividade 1--------------------------|
+      |--------------------------Atividade 2--------------------------|
       
       Autor: Rodrigo Fernandes Pinto 
       Registro Acadêmico: 30695							*/
