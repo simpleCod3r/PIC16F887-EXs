@@ -53,7 +53,7 @@ int main(void)
 	//setup
 	TRISC = 0x00;		//PORTC como saídas para validação
 	TRISD = 0x00;		//PORTD como saídas para validação
-	TRISA = 0b00000001; //PORTAbits.RA0 definido como entrada
+	TRISA = 0b00000001; 	//PORTAbits.RA0 definido como entrada
 	ANSEL = 0b00000001;	//Entrada em PORTAbits.RA0 tipo analógica
 	
 	//TMR1 = 15536 -> 0x3CAF
@@ -64,13 +64,13 @@ int main(void)
 	T1CON = 0b00010001;
 	PIR1bits.TMR1IF = 0; // Inicializa flag de interrupção em TMR1 em 0
 	PIE1bits.TMR1IE = 1; // Habilita interrupção por estouro em TMR1
-	INTCONbits.PEIE = 1; //Habilita interrupçao de periféricos
+	INTCONbits.PEIE = 1; // Habilita interrupçao de periféricos
 	
 	//ADC -> ch0, fosc/4 
 	ADCON0 = 0b01000001;
-	ADCON1bits.ADFM = 0;	//alinhado a esquerda
-	ADCON1bits.VCFG1 = 0;	//Ref- = VSS
-	ADCON1bits.VCFG0 = 0;	//Ref+ = VCC
+	ADCON1bits.ADFM = 0;	// Alinhado a esquerda
+	ADCON1bits.VCFG1 = 0;	// Ref- = VSS
+	ADCON1bits.VCFG0 = 0;	// Ref+ = VCC
 	__delay_ms(10);
 
 	INTCONbits.GIE = 1;	// Habilita interrupção global
@@ -81,13 +81,12 @@ int main(void)
 		if(flag == 1)
 		{
 			flag = 0;
-			//PORTA ^= 0x01;
-			ADCON0bits.GO = 1; // Inicia a conversão
-			while(ADCON0bits.GO == 1); // Epera o final da conversão
-			adc = (ADRESH<<2)+(ADRESL>>6); //Armazena resultado da conversão em um int 
-			tensao = adc*0.00488;	// Converte para 0 a 5V  			
-			PORTC = ADRESH<<2;	// Interface de teste MSbs do resultado da conversão A/D
-			PORTD = ADRESL>>6;	// Interface de teste LSbs do resultado da conversão A/D
+			ADCON0bits.GO = 1; 		// Inicia a conversão
+			while(ADCON0bits.GO == 1); 	// Epera o final da conversão
+			adc = (ADRESH<<2)+(ADRESL>>6);	// Armazena resultado da conversão em um int 16 bits pois o resultado é de 10 bits
+			tensao = adc*0.00488;		// Converte para 0 a 5V  			
+			PORTC = ADRESH<<2;		// Interface de teste MSbs do resultado da conversão A/D
+			PORTD = ADRESL>>6;		// Interface de teste LSbs do resultado da conversão A/D
 			
 		}		
 
