@@ -45,7 +45,7 @@ void interrupt ISR(void)				//Interrupt Service Routine
 	
 void incPWM()
 {
-			uint8_t duty_10p = 16;	 // Aproximadamente 10% do preríodo
+			uint8_t duty_10p = 16;	 	// Aproximadamente 10% do preríodo
 			CCPR1L += duty_10p;
 			cnt++;
 }
@@ -66,14 +66,14 @@ void main(void)
 	OPTION_REG = 0b11000000;	// Desabilita pull-up de PORTB, Define borda de subida
     
 	// PWM
-	 CCP1CON = 0b00001100; 	// PWM: Single output, P1C active HIGH
+	 CCP1CON = 0b00001100; 		// PWM: Single output, P1C active HIGH
 	 CCPR1L = 0b00000001;		// MSbs do duty cycle.
     
 	 // TIMER2 PRESCALER
          PR2 = 166;			// Valor de comparação com TMR2 para 1500Hz de frequência no PWM
-	 T2CON = 0b00000101;  // TMR2ON, PS 1:4
+	 T2CON = 0b00000101;  		// TMR2ON, PS 1:4
 	 
-	INTCONbits.GIE = 1;	// Habilita interrupção global
+	INTCONbits.GIE = 1;		// Habilita interrupção global
 	
 	while(1)
 	{
@@ -84,7 +84,7 @@ void main(void)
 		}
 		     if(cnt == 10)			// Se Duty chega a 100% 
 		{
-			   CCPR1L = 0b00000001;	// Reinicializa os MSbs 
+			   CCPR1L = 0b00000001;		// Reinicializa os MSbs 
 			   cnt=0;
 		}
 	}
