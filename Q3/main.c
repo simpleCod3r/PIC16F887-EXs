@@ -43,12 +43,17 @@ void interrupt ISR(void)				//Interrupt Service Routine
 			}
 	}
 	
-void incPWM()
-{
-			uint8_t duty_10p = 16;	 	// Aproximadamente 10% do preríodo
-			CCPR1L += duty_10p;
-			cnt++;
-}
+void incPWM()					//Função de incremento
+	{
+		uint8_t duty_10p = 16;	 	// Aproximadamente 10% do preríodo
+		CCPR1L += duty_10p;
+		cnt++;
+		if(cnt == 10)			// Se Duty chega a 100% 
+			{
+			   CCPR1L = 0b00000001;		// Reinicializa os MSbs 
+			   cnt=0;
+			}
+	}
 
 void main(void)
  {
@@ -81,11 +86,6 @@ void main(void)
 		{
 			flag = 0;
 			incPWM();			// Incrementa 10% de Duty Cycle
-		}
-		     if(cnt == 10)			// Se Duty chega a 100% 
-		{
-			   CCPR1L = 0b00000001;		// Reinicializa os MSbs 
-			   cnt=0;
 		}
 	}
  }
