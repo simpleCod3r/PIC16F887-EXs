@@ -50,7 +50,7 @@ void incPWM()					//Função de incremento
 		cnt++;
 		if(cnt == 10)			// Se Duty chega a 100% 
 			{
-			   CCPR1L = 0b00000001;		// Reinicializa os MSbs 
+			   CCPR1L = 0b00000001;	// Reinicializa os MSbs 
 			   cnt=0;
 			}
 	}
@@ -85,7 +85,7 @@ void main(void)
 		      if(flag == 1)
 		{
 			flag = 0;
-			incPWM();			// Incrementa 10% de Duty Cycle
+			incPWM();	// Incrementa 10% de Duty Cycle
 		}
 	}
  }
