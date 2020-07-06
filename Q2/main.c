@@ -84,7 +84,7 @@ int main(void)
 			ADCON0bits.GO = 1; 		// Inicia a conversão
 			while(ADCON0bits.GO == 1); 	// Epera o final da conversão
 			adc = (ADRESH<<8)+(ADRESL);	// Armazena resultado da conversão em um int 16 bits pois o resultado é de 10 bits
-			tensao = adc*0.146627;		// Converte para 0 a 150V  			
+			tensao = adc*0.146627;		// Converte para 0 a 150V  (Para esse cógido foi utizada na saída do LM35 um amp-op não inversor de ganho A = 3.33)		
 			PORTC = ADRESL;			// Interface de teste 8 LSbs do resultado da conversão A/D
 			PORTD = ADRESH ;		// Interface de teste 2 MSbs do resultado da conversão A/D
 			
