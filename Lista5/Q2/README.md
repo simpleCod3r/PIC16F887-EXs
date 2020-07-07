@@ -1,0 +1,1 @@
+Implemente um contador de 1 dígito que é incrementado toda vez que um botão B1 é pressionado. Quando o valor máximo de contagem for atingido (255), um LED L1 deve ser aceso para indicar tal condição, e o valor não é mais incrementado enquanto o contador não for resetado. O contador só é resetado se um outro botão B2 for pressionado. Desenhe o circuito utilizado.
