@@ -1,7 +1,7 @@
 
 O código a ser desenvolvido deve: 
 
-* Gerar um sinal PWM de frequência 2kHz e o duty-cycle proporcional a tensão do potenciômetro conectado no pino RA1;
+* ~~Gerar um sinal PWM de frequência 2kHz e o duty-cycle proporcional a tensão do potenciômetro conectado no pino RA1;~~
 * O valor do duty-cycle será exibido nos dois displays de 7 segmentos do tipo catodo-comum conectados à porta D;
 * Os displays são multiplexados, sendo um display para exibir dezenas e o outro as unidades;
 * Os displays devem ser atualizados periodicamente com uma frequência de 60Hz;
