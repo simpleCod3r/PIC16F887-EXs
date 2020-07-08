@@ -28,12 +28,9 @@ O código a ser desenvolvido deve:
 
 
 //VARIAVEIS GLOBAL
-uint8_t  dez = 0, uni =0;
-uint16_t duty = 0x00;
-uint16_t timer1_value = 48535;
+uint8_t  dez = 0x00, uni =0x00;
+uint16_t duty = 0x00, timer1_value = 48535;
 uint8_t flag = 0x00;
-uint8_t cnt = 0x00;
-
 
 void interrupt ISR(void) // Interrupt Service Routine
 {
@@ -75,8 +72,8 @@ void main(void)
 
 
 		//Config conversor A/D
-		//ADC -> ch1, fosc/4 
-		ADCON0 = 0b01000001;
+		//ADC -> ch1, fosc/8 
+		ADCON0 = 0b01000101;
 		ADCON1bits.ADFM = 0;	// Alinhado a esquerda
 		ADCON1bits.VCFG1 = 0;	// Ref- = VSS
 		ADCON1bits.VCFG0 = 0;	// Ref+ = VCC
@@ -107,7 +104,7 @@ void main(void)
 								while(ADCON0bits.GO == 1); 	// Epera o final da conversão
 								//adc = (ADRESH<<2)+(ADRESL>>6);	// Armazena resultado da conversão em um int 16 bits pois o resultado é de 10 bits
 								//CCPR1L  = ADRESH;
-								duty = (uint16_t) ((ADRESH)*49e-2);		// Converte para 0 a 5V  			
+								duty = ADRESH;		// Converte para 0 a 5V  	*51e-2		
 								dez = duty/10;
 								uni = duty%10;
 								if(duty<100)
