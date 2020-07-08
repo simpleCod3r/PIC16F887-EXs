@@ -1,3 +1,15 @@
+/* 
+
+O código a ser desenvolvido deve: 
+
+* ~~Gerar um sinal PWM de frequência 2kHz~~; 
+* Duty-cycle proporcional a tensão do potenciômetro conectado no pino RA1;
+* O valor do duty-cycle será exibido nos dois displays de 7 segmentos do tipo catodo-comum conectados à porta D;
+* Os displays são multiplexados, sendo um display para exibir dezenas e o outro as unidades;
+* Os displays devem ser atualizados periodicamente com uma frequência de 60Hz;
+* A cada período (aproximadamente 16,7ms), o display ativo deve ser selecionado a partir dos sinais de seleção conectados aos pinos RB0 e RB1.
+ */
+
 /*
       |----------------UNIVERSIDADE FEDERAL DE ITAJUBÁ----------------|
       |--------------------------Regime - RTE-------------------------|
@@ -11,33 +23,17 @@
 #include<stdint.h>
 #include<math.h>
 #include "display.h"
+#include "adc_init.h"
+#include "configs.h"
 
-//Configuration bits: CONFIG1 = 0x3FF4
-#pragma config FOSC = INTRC_NOCLKOUT
-#pragma config WDTE = OFF
-#pragma config PWRTE = OFF
-#pragma config MCLRE = ON
-#pragma config CP = OFF
-#pragma config CPD = OFF
-#pragma config BOREN = ON
-#pragma config IESO = ON
-#pragma config FCMEN = ON
-#pragma config LVP = OFF
-#pragma config DEBUG = OFF
-
-//Configuration bits: CONFIG2 = 0x3FFF
-#pragma config BOR4V=BOR40V
-#pragma config WRT=OFF
-
-//Frequência de Clock de 4MHz
-#define _XTAL_FREQ 4000000
 
 //VARIAVEIS GLOBAL
 uint8_t  dez = 0, uni =0;
 uint16_t duty = 0x00;
 uint16_t timer1_value = 48535;
-uint8_t flag = 0x00, duty =0x00;
+uint8_t flag = 0x00;
 uint8_t cnt = 0x00;
+
 
 void interrupt ISR(void) // Interrupt Service Routine
 {
@@ -50,6 +46,7 @@ void interrupt ISR(void) // Interrupt Service Routine
 				flag = 1;	// Dispara 
 			}
 	}
+
 void main(void)
  {
 		//setup  ENTRADA ADC
@@ -60,7 +57,7 @@ void main(void)
 		//SELECAO DE DISPLAY 0x01 -> dezena 0x03 ->unidade
 		TRISB = 0x00;						// saídas
 		ANSELH = 0x00;
-		PORTB = 0x00;
+		PORTB = 0x01; 	// Inicializa display
 		
 		//setup SAIDA PWM
 		TRISD = 0x00;							// Define PORTD como saída
@@ -91,7 +88,7 @@ void main(void)
 
 		// PWM
 		CCP1CON = 0b00001100; 		// PWM: Single output, P1C active HIGH
-		CCPR1L = 0X0F;			// MSbs do duty cycle.
+		CCPR1L = 0X03;			// MSbs do duty cycle.
 
     
 		// TIMER2 
@@ -105,29 +102,25 @@ void main(void)
 								if(flag == 1)
 						{	
 								flag = 0;
-								
-								PORTB = 0x02;
+								PORTB ^= 0x03;
 								ADCON0bits.GO = 1; 		// Inicia a conversão
 								while(ADCON0bits.GO == 1); 	// Epera o final da conversão
-								adc = (ADRESH<<2)+(ADRESL>>6);	// Armazena resultado da conversão em um int 16 bits pois o resultado é de 10 bits
-								duty = (ADRESH*39e-2);		// Converte para 0 a 5V  			
+								//adc = (ADRESH<<2)+(ADRESL>>6);	// Armazena resultado da conversão em um int 16 bits pois o resultado é de 10 bits
+								//CCPR1L  = ADRESH;
+								duty = (uint16_t) ((ADRESH)*49e-2);		// Converte para 0 a 5V  			
 								dez = duty/10;
 								uni = duty%10;
-								CCPR1L = duty;
-								PORTB = 0x02;
-								PORTD = display[uni+1];
-								
-								
-						
-
-						//while(CCPR1L<10)
-						//num2 = (CCPR1L/102);				// Verifica dezenas
-							// Escreve dezenas
-						//num1 = (adc/10);					
-						//PORTD = uni[num1];
+								if(duty<100)
+								{
+										if(PORTB == 0x01)
+											{
+														PORTD = display[dez];
+											}
+											if(PORTB == 0x02)
+											{
+														PORTD = display[uni];
+											}
+								}
 						}
-				
-		}
-      
+				}      
  }
-
