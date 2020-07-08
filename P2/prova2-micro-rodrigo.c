@@ -64,7 +64,7 @@ void main(void)
 		TRISC = 0x00;
 		PORTC = 0x00;
 
-	//TMR1 = 49536 -> 0x3CAF
+	//TMR1 = 48536
 	TMR1H = (uint8_t) (timer1_value >> 8);
 	TMR1L = (uint8_t) (timer1_value); 
 
@@ -76,7 +76,7 @@ void main(void)
 
 		//Config conversor A/D
 		//ADC -> ch1, fosc/4 
-		ADCON0 = 0b01000101;
+		ADCON0 = 0b01000001;
 		ADCON1bits.ADFM = 0;	// Alinhado a esquerda
 		ADCON1bits.VCFG1 = 0;	// Ref- = VSS
 		ADCON1bits.VCFG0 = 0;	// Ref+ = VCC
