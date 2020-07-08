@@ -68,13 +68,13 @@ void main(void)
 		ANSEL = 0xFF;	// Analógica
 		PORTA = 0x00;// Inicializa para evitar embaralhamento
 
-		//SELECAO DE DISPLAY 0x01 -> dezena 0x03 ->unidade
-		TRISB = 0x00;						// saídas
+		//SELECAO DE DISPLAY (0x01 -> dezena) (0x02 ->unidade)
+		TRISB = 0x00;	// saídas
 		ANSELH = 0x00;
 		PORTB = 0x01; 	// Inicializa display
 		
 		//setup SAIDA PWM
-		TRISD = 0x00;							// Define PORTD como saída
+		TRISD = 0x00;	// Define PORTD como saída
 		TRISC = 0x00;
 		PORTC = 0x00;
 		 PORTD=0x00;
@@ -91,7 +91,7 @@ void main(void)
 
 		//Config conversor A/D
 		//ADC -> ch1, fosc/8 
-		ADCON0 = 0b01000101; 							//está checkado e correto 22:15
+		ADCON0 = 0b01000101; 							
 		ADCON1bits.ADFM = 0;	// Alinhado a esquerda
 		ADCON1bits.VCFG1 = 0;	// Ref- = VSS
 		ADCON1bits.VCFG0 = 0;	// Ref+ = VCC
@@ -121,7 +121,7 @@ void main(void)
 								ADCON0bits.GO = 1; 		// Inicia a conversão
 								while(ADCON0bits.GO == 1); 	// Epera o final da conversão
 								CCPR1L  = ADRESH*0.5;
-								duty = (((ADRESH<<2)+(ADRESL>>6))*0.097751) - 1;		// Converte para 0 a 99%		
+								duty = (((ADRESH<<2)+(ADRESL>>6))*0.097751);		// Converte para 0 a 99%		
 								dez = duty/10;
 								uni = duty%10;
 								if(duty<100)
