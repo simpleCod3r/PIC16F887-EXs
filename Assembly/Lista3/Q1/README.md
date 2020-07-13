@@ -9,7 +9,7 @@ Considerando o circuito, o firmware a ser desenvolvido, deve seguir as etapas:
 
 - [x] Assim que o microcontrolador for ligado, todos os LEDs devem ser ativados por um segundo.
 
-- [ ] Após um segundo, o programa entra em um loop e permanece nesse loop enquanto a variável k é menor que 20.
+- [x] Após um segundo, o programa entra em um loop e permanece nesse loop enquanto a variável k é menor que 20.
 
 - [ ] Dentro do loop, o estado de PORTB é monitorado. Se PORTB=0xFF, seu estado é invertido para 0x00 e vice versa. O LEDs devem permanecer 200ms em cada estado.
 
