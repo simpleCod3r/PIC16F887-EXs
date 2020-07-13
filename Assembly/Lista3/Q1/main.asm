@@ -28,8 +28,15 @@ Setup:
 
  	bsf PORTB
 	call Delay_1s
-
-
+	
+Loop_20:
+	movlw 0x14		;Move valor 20 p/ W
+	subwf k, W		;Compara k com W
+	btfsc STATUS, Z	;Testa resultado comparação
+	goto Main_loop	;Vai pra main se k=20
+	goto Loop_20	;Volta pro loop se k<20
+Main_Loop:
+	goto Main_Loop
 Delay_1s:
 	nop
 	return
