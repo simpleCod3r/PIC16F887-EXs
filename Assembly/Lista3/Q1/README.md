@@ -7,7 +7,7 @@ Considerando o circuito, o firmware a ser desenvolvido, deve seguir as etapas:
 
 # ETAPAS
 
-- [ ] Assim que o microcontrolador for ligado, todos os LEDs devem ser ativados por um segundo.
+- [x] Assim que o microcontrolador for ligado, todos os LEDs devem ser ativados por um segundo.
 
 - [ ] Após um segundo, o programa entra em um loop e permanece nesse loop enquanto a variável k é menor que 20.
 
