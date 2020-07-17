@@ -2,7 +2,7 @@
 
 ![Circuito](https://user-images.githubusercontent.com/67662041/87811717-7a5da200-c835-11ea-9d9b-5466884a727f.PNG)
 # Etapas
-- [ ] Implemente um contador de 1 dígito que é incrementado toda vez que um botão B1 é
+- [x] Implemente um contador de 1 dígito que é incrementado toda vez que um botão B1 é
 pressionado;
 - [ ] Quando o valor máximo de contagem for atingido (255), um LED L1 deve ser aceso
 para indicar tal condição;
